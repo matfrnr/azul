@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import { COLORS, COLOR_PLATEAU, PLATEAU_PATTERN } from './types/constants';
+import { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Juste pour afficher/masquer les règles 
+  const [showRules, setShowRules] = useState(false);
+
+  function initGame() {
+    const bag = [];
+    // Remplir la pioche avec 20 tuiles de chaque couleur
+    COLORS.forEach(color => {
+      for (let i = 0; i < 20; i++) {
+        bag.push(color);
+      }
+    });
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <h1>Bienvenue dans Azul 🫠</h1>
+      <button onClick={() => setShowRules(true)}>Voir les règles</button>
 
-export default App
+      {showRules && (
+        <div className="modal">
+          <h2>Les règles du jeu</h2>
+          <p>Le but du jeu est de collecter des tuiles et de marquer des points. Pour gagner il faut avoir le plus de points à la fin de la partie. Il faut remplir une ligne de sa mosaïque avec des tuiles de la même couleur. À chaque tour, tu choisis des tuiles d'une seule couleur sur la table et tu les places sur ton plateau. Une fois qu'une rangée est complète, elle s'ajoute à ta mosaïque et tu marques des points !</p>
+          <button onClick={() => setShowRules(false)}>Fermer</button>
+        </div>
+      )}
+
+      {showRules && (
+        <div className="overlay" onClick={() => setShowRules(false)} />
+      )}
+    </>
+  );
+}
+export default App;
