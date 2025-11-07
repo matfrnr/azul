@@ -8,18 +8,29 @@ function App() {
   const [showRules, setShowRules] = useState(false);
 
   function initGame() {
-    const bag = [];
+    const bag: string[] = [];
     // Remplir la pioche avec 20 tuiles de chaque couleur
     COLORS.forEach(color => {
       for (let i = 0; i < 20; i++) {
         bag.push(color);
       }
     });
+
+    // je dois mélanger la pioche sinon l'ordre n'est pas aléatoire
+    for (let i = bag.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [bag[i], bag[j]] = [bag[j], bag[i]];
+    }
+
+    return bag;
+
   }
+
+
 
   return (
     <>
-      <h1>Bienvenue dans Azul 🫠</h1>
+      <h1>Bienvenue ! Jouons au jeu Azul 🫠</h1>
       <button onClick={() => setShowRules(true)}>Voir les règles</button>
 
       {showRules && (
